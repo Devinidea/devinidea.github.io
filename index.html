@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devin Zhao | DevOps & Cloud Engineer</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #0a0a0f;
+  color: #e0e0e0;
+  overflow-x: hidden;
+}
+
+/* Animated gradient background */
+.hero-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 25%, #0a1a2e 50%, #0a2e1a 75%, #1a0a1a 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  z-index: -1;
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image: 
+    linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+#particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+.particle {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: rgba(0, 200, 255, 0.6);
+  border-radius: 50%;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.5; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+.glow {
+  position: fixed;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(0,200,255,0.06), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  transition: left 0.3s, top 0.3s;
+}
+
+/* Navigation */
+nav {
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(20px);
+  background: rgba(10, 10, 15, 0.8);
+  border-bottom: 1px solid rgba(0, 200, 255, 0.15);
+  padding: 16px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+nav .logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #00c8ff;
+  letter-spacing: 2px;
+}
+
+nav .logo span { color: #fff; }
+
+nav ul { display: flex; list-style: none; gap: 32px; }
+
+nav ul li a {
+  color: #888;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover { color: #00c8ff; }
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 80px 24px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border: 1px solid rgba(0, 200, 255, 0.3);
+  border-radius: 50px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #00c8ff;
+  background: rgba(0, 200, 255, 0.05);
+  margin-bottom: 32px;
+  animation: fadeInUp 0.8s ease;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 8px; height: 8px;
+  background: #00ff88;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.5); }
+}
+
+.hero h1 {
+  font-size: 72px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -2px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+.hero h1 .gradient-text {
+  background: linear-gradient(135deg, #00c8ff, #00ff88, #00c8ff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: textShine 3s linear infinite;
+}
+
+@keyframes textShine {
+  to { background-position: 200% center; }
+}
+
+.hero .subtitle {
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 48px;
+  animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+.hero .subtitle span { color: #00c8ff; }
+
+.hero-buttons { display: flex; gap: 16px; animation: fadeInUp 0.8s ease 0.6s both; }
+
+.btn-primary {
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #00c8ff, #0088ff);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px rgba(0, 200, 255, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 200, 255, 0.5);
+}
+
+.btn-outline {
+  padding: 14px 32px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-outline:hover {
+  border-color: #00c8ff;
+  color: #00c8ff;
+  background: rgba(0, 200, 255, 0.05);
+}
+
+.stats { display: flex; gap: 64px; margin-top: 80px; animation: fadeInUp 0.8s ease 0.8s both; }
+
+.stat { text-align: center; }
+
+.stat-number { font-size: 40px; font-weight: 800; color: #fff; display: block; }
+
+.stat-label { font-size: 13px; color: #555; letter-spacing: 1px; text-transform: uppercase; }
+
+/* About */
+section { padding: 100px 48px; max-width: 1100px; margin: 0 auto; }
+
+.section-label { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #00c8ff; margin-bottom: 16px; }
+
+h2 { font-size: 42px; font-weight: 700; color: #fff; margin-bottom: 48px; }
+
+.about-text {
+  font-size: 16px;
+  color: #888;
+  line-height: 1.8;
+  max-width: 700px;
+}
+
+.about-text strong { color: #e0e0e0; }
+
+/* Skills */
+.skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+.skill-card {
+  padding: 28px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.skill-card:hover {
+  background: rgba(0, 200, 255, 0.05);
+  border-color: rgba(0, 200, 255, 0.3);
+  transform: translateY(-4px);
+}
+
+.skill-card h3 { font-size: 16px; color: #fff; margin-bottom: 12px; }
+.skill-card p  { font-size: 13px; color: #555; line-height: 1.6; }
+
+/* Experience */
+.exp-item {
+  padding: 32px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  transition: all 0.3s;
+}
+
+.exp-item:hover {
+  border-color: rgba(0, 200, 255, 0.2);
+  background: rgba(0, 200, 255, 0.02);
+}
+
+.exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.exp-header h3 { font-size: 20px; color: #fff; }
+.exp-header .date { font-size: 13px; color: #00c8ff; }
+.exp-item h4 { font-size: 14px; color: #666; margin-bottom: 12px; }
+.exp-item ul { list-style: none; }
+.exp-item ul li { font-size: 14px; color: #888; margin-bottom: 8px; padding-left: 20px; position: relative; }
+.exp-item ul li::before { content: '▸'; position: absolute; left: 0; color: #00c8ff; }
+
+/* Projects */
+.projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+.project-card {
+  padding: 28px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  transition: all 0.3s;
+  cursor: pointer;
+  position: relative;
+}
+
+.project-card:hover {
+  border-color: rgba(0, 200, 255, 0.3);
+  background: rgba(0, 200, 255, 0.03);
+  transform: translateY(-4px);
+}
+
+.project-card h3 { font-size: 16px; color: #fff; margin-bottom: 8px; }
+.project-card .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.project-card .tag { font-size: 11px; padding: 3px 10px; background: rgba(0,200,255,0.08); color: #00c8ff; border-radius: 4px; }
+.project-card p { font-size: 13px; color: #555; line-height: 1.6; }
+
+/* Expand indicator */
+.project-card .expand-hint {
+  font-size: 11px;
+  color: #333;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.3s;
+}
+.project-card:hover .expand-hint { color: #00c8ff; }
+.project-card .expand-hint::before {
+  content: '▶';
+  font-size: 9px;
+  transition: transform 0.3s;
+}
+.project-card.expanded .expand-hint::before { transform: rotate(90deg); }
+.project-card.expanded .expand-hint { color: #00c8ff; }
+
+/* Project details (hidden by default) */
+.project-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, margin-top 0.4s ease;
+  margin-top: 0;
+}
+.project-card.expanded .project-details {
+  max-height: 400px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.project-detail-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.5;
+}
+.project-detail-item::before {
+  content: '▸';
+  color: #00c8ff;
+  flex-shrink: 0;
+}
+
+/* Education */
+.edu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+.edu-card {
+  padding: 28px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.edu-card:hover {
+  border-color: rgba(0, 200, 255, 0.2);
+  background: rgba(0, 200, 255, 0.02);
+}
+
+.edu-card h3 { font-size: 18px; color: #fff; margin-bottom: 4px; }
+.edu-card .school { font-size: 14px; color: #555; margin-bottom: 8px; }
+.edu-card .year  { font-size: 13px; color: #00c8ff; margin-bottom: 12px; display: block; }
+.edu-card p { font-size: 13px; color: #555; }
+
+/* Contact */
+.contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+.contact-card {
+  padding: 24px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.3s;
+  text-decoration: none;
+  color: #888;
+}
+
+.contact-card:hover {
+  border-color: rgba(0, 200, 255, 0.3);
+  color: #fff;
+  background: rgba(0, 200, 255, 0.03);
+}
+
+.contact-icon { font-size: 28px; }
+.contact-card span { font-size: 15px; font-weight: 500; }
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 48px;
+  color: #333;
+  font-size: 13px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+footer a { color: #555; text-decoration: none; }
+footer a:hover { color: #00c8ff; }
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 42px; }
+  .stats { gap: 32px; }
+  .skills-grid, .projects-grid { grid-template-columns: 1fr; }
+  .edu-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  nav { padding: 16px 24px; }
+  nav ul { gap: 16px; }
+  nav ul li a { font-size: 12px; }
+  section { padding: 60px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero-bg"></div>
+<div id="particles"></div>
+<div class="glow" id="glow"></div>
+
+<nav>
+  <div class="logo">DEVIN<span>.ZHAO</span></div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Available for opportunities</div>
+  <h1>DevOps &amp;<br><span class="gradient-text">Cloud Engineer</span></h1>
+  <p class="subtitle">Building scalable infrastructure with <span>AWS</span>, <span>Terraform</span> & <span>Kubernetes</span></p>
+  <div class="hero-buttons">
+    <a href="#contact" class="btn-primary">Get in Touch</a>
+    <a href="#projects" class="btn-outline">View Projects</a>
+  </div>
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-number">2+</span>
+      <span class="stat-label">Years Experience</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">10+</span>
+      <span class="stat-label">CI/CD Pipelines</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">3</span>
+      <span class="stat-label">Cloud Projects</span>
+    </div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="section-label">About me</div>
+  <h2>Who I Am</h2>
+  <p class="about-text">
+    DevOps Engineer with hands-on experience in <strong>AWS cloud infrastructure</strong>,
+    <strong>Infrastructure as Code</strong> (Terraform), <strong>container orchestration</strong>
+    (Docker, Kubernetes/EKS), and <strong>CI/CD automation</strong>.
+    Currently completing a <strong>Master of Cybersecurity</strong> at Monash University,
+    bringing a security-focused mindset to cloud engineering practices.
+    I thrive in environments where automation, scalability, and reliability intersect.
+  </p>
+</section>
+
+<section id="skills">
+  <div class="section-label">What I do</div>
+  <h2>Technical Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <h3>☁️ Cloud Platforms</h3>
+      <p>AWS (EC2, ECS/EKS, RDS, S3, ALB, IAM, CloudWatch)</p>
+    </div>
+    <div class="skill-card">
+      <h3>🏗️ Infrastructure as Code</h3>
+      <p>Terraform (module design, state management), Ansible (playbooks, roles)</p>
+    </div>
+    <div class="skill-card">
+      <h3>📦 Containerization</h3>
+      <p>Docker, Kubernetes (EKS, ECS, Helm, ArgoCD)</p>
+    </div>
+    <div class="skill-card">
+      <h3>🔄 CI/CD</h3>
+      <p>GitHub Actions, Jenkins (pipeline as code), Git</p>
+    </div>
+    <div class="skill-card">
+      <h3>📊 Monitoring</h3>
+      <p>Prometheus + Grafana, AWS CloudWatch, Alerting</p>
+    </div>
+    <div class="skill-card">
+      <h3>🐍 Scripting</h3>
+      <p>Python (automation), Bash (shell scripting), Linux</p>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-label">My journey</div>
+  <h2>Work Experience</h2>
+  
+  <div class="exp-item">
+    <div class="exp-header">
+      <div>
+        <h3>DevOps Engineer</h3>
+        <h4>Dispatch AI · June 2025 – September 2025</h4>
+      </div>
+      <span class="date">Remote</span>
+    </div>
+    <ul>
+      <li>Provisioned AWS infrastructure (EC2, S3, IAM, EKS) using Terraform with reusable modules</li>
+      <li>Deployed containerized applications on AWS EKS, managing production AI workloads</li>
+      <li>Automated CI/CD pipelines using Jenkins and Docker, reducing deployment time</li>
+      <li>Implemented monitoring with Prometheus and Grafana for system reliability</li>
+      <li>Wrote Python automation scripts for infrastructure provisioning tasks</li>
+    </ul>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-header">
+      <div>
+        <h3>IT Support / Repair Engineer</h3>
+        <h4>DJI · February 2024 – Present</h4>
+      </div>
+      <span class="date">Melbourne</span>
+    </div>
+    <ul>
+      <li>Windows environment IT support and system troubleshooting</li>
+      <li>Developed Python automation scripts for workflow optimization and asset management</li>
+      <li>Maintained IT asset records and technical documentation</li>
+    </ul>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-header">
+      <div>
+        <h3>DevOps Intern</h3>
+        <h4>BeeQuant · April 2024 – August 2024</h4>
+      </div>
+      <span class="date">Remote</span>
+    </div>
+    <ul>
+      <li>Automated AWS infrastructure with Terraform and Ansible, including reusable modules for ECS clusters</li>
+      <li>Built CI/CD pipelines using GitHub Actions for containerized deployments</li>
+      <li>Containerized backend services with Docker on AWS ECS</li>
+    </ul>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-label">What I've built</div>
+  <h2>Key Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card" onclick="toggleProject(this)">
+      <h3>AWS EKS Production Cluster</h3>
+      <div class="tags">
+        <span class="tag">Terraform</span>
+        <span class="tag">AWS EKS</span>
+        <span class="tag">Helm</span>
+        <span class="tag">Prometheus</span>
+      </div>
+      <p>Designed and deployed a complete AWS EKS cluster using Terraform from scratch, supporting production AI workloads with auto-scaling, monitoring, and automated deployments.</p>
+      <div class="expand-hint">View details</div>
+      <div class="project-details">
+        <div class="project-detail-item">Provisioned VPC, subnets, NAT Gateway, and IAM roles using Terraform modules</div>
+        <div class="project-detail-item">Deployed EKS cluster with managed node groups and auto-scaling policies</div>
+        <div class="project-detail-item">Installed Prometheus + Grafana via Helm charts for cluster monitoring</div>
+        <div class="project-detail-item">Set up ALB Ingress Controller for external access to services</div>
+        <div class="project-detail-item">Configured Cluster Autoscaler for dynamic node provisioning</div>
+      </div>
+    </div>
+    <div class="project-card" onclick="toggleProject(this)">
+      <h3>CI/CD Pipeline Automation</h3>
+      <div class="tags">
+        <span class="tag">Jenkins</span>
+        <span class="tag">Docker</span>
+        <span class="tag">GitHub Actions</span>
+        <span class="tag">Kubernetes</span>
+      </div>
+      <p>Built end-to-end CI/CD pipelines integrating code quality checks, automated testing, Docker container builds, and Kubernetes deployments.</p>
+      <div class="expand-hint">View details</div>
+      <div class="project-details">
+        <div class="project-detail-item">Jenkins pipelines with stage: checkout → lint → test → build → push → deploy</div>
+        <div class="project-detail-item">Docker image builds with multi-stage builds for optimized image size</div>
+        <div class="project-detail-item">GitHub Actions workflows for pull request validation gates</div>
+        <div class="project-detail-item">Automated Kubernetes deployments with rolling updates and rollback support</div>
+        <div class="project-detail-item">Integrated Slack notifications for build status updates</div>
+      </div>
+    </div>
+    <div class="project-card" onclick="toggleProject(this)">
+      <h3>Infrastructure as Code Module Library</h3>
+      <div class="tags">
+        <span class="tag">Terraform</span>
+        <span class="tag">Ansible</span>
+        <span class="tag">AWS ECS</span>
+        <span class="tag">Python</span>
+      </div>
+      <p>Created reusable Terraform modules for ECS cluster configurations and Ansible playbooks — reducing infrastructure provisioning time from days to minutes.</p>
+      <div class="expand-hint">View details</div>
+      <div class="project-details">
+        <div class="project-detail-item">Terraform modules for VPC, ECS cluster, RDS instance, and S3 backend</div>
+        <div class="project-detail-item">Ansible playbooks for app deployment, config management, and monitoring setup</div>
+        <div class="project-detail-item">Python scripts for automated module testing and state validation</div>
+        <div class="project-detail-item">Versioned module registry with input/output documentation</div>
+        <div class="project-detail-item">Reduced new environment provisioning from 3 days to under 30 minutes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-label">Education</div>
+  <h2>Education</h2>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <h3>Master of Cybersecurity</h3>
+      <p class="school">Monash University, Australia</p>
+      <span class="year">2020 – 2022</span>
+      <p>Focus: Cloud Computing and Security, Software Security, IT Forensics</p>
+    </div>
+    <div class="edu-card">
+      <h3>Bachelor of Psychology & Law (Arts)</h3>
+      <p class="school">Sungkyunkwan University, South Korea</p>
+      <span class="year">2013 – 2017</span>
+      <p>Cross-disciplinary studies in human behavior and legal frameworks</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-label">Let's connect</div>
+  <h2>Get in Touch</h2>
+  <div class="contact-grid">
+    <a href="mailto:devinzhao.au@gmail.com" class="contact-card">
+      <span class="contact-icon">📧</span>
+      <span>devinzhao.au@gmail.com</span>
+    </a>
+    <a href="tel:+61432780066" class="contact-card">
+      <span class="contact-icon">📱</span>
+      <span>+61 432 780 066</span>
+    </a>
+    <a href="https://linkedin.com/in/devin-pengfei-zhao" target="_blank" class="contact-card">
+      <span class="contact-icon">💼</span>
+      <span>linkedin.com/in/devin-pengfei-zhao</span>
+    </a>
+    <a href="https://github.com/Devinidea" target="_blank" class="contact-card">
+      <span class="contact-icon">🐙</span>
+      <span>github.com/Devinidea</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>Designed &amp; Built by <a href="https://devinzhao.com">Devin Zhao</a> · 2026</p>
+</footer>
+
+<script>
+// Particles
+const container = document.getElementById('particles');
+for (let i = 0; i < 30; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDuration = (Math.random() * 10 + 8) + 's';
+  p.style.animationDelay = Math.random() * 10 + 's';
+  p.style.width = (Math.random() * 4 + 2) + 'px';
+  p.style.height = p.style.width;
+  container.appendChild(p);
+}
+
+// Glow cursor
+const glow = document.getElementById('glow');
+document.addEventListener('mousemove', (e) => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top = e.clientY + 'px';
+});
+
+// Project card expand/collapse
+function toggleProject(card) {
+  const wasExpanded = card.classList.contains('expanded');
+  // Close all cards first
+  document.querySelectorAll('.project-card').forEach(c => c.classList.remove('expanded'));
+  // Toggle clicked card
+  if (!wasExpanded) {
+    card.classList.add('expanded');
+  }
+}
+</script>
+</body>
+</html>
